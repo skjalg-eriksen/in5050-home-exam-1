@@ -148,15 +148,46 @@ void dequant_idct_block_8x8(int16_t *in_data, int16_t *out_data,
 
 void sad_block_8x8(uint8_t *block1, uint8_t *block2, int stride, int *result)
 {
-  int u, v;
+  int v;
 
   *result = 0;
+  // Neon Intrinsics varriables
+  //uint8x8_t b_1, b_2; 
+  //uint16x8_t diff;
 
   for (v = 0; v < 8; ++v)
   {
-    for (u = 0; u < 8; ++u)
-    {
-      *result += abs(block2[v*stride+u] - block1[v*stride+u]);
-    }
+    
+    /* Neon Intrinsics
+    b_1 = vld1_u8(block1 + v*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + v*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    *result += vaddvq_u16(diff);      // vector wide sum
+    */
+
+
+
+    /*  inline-assembly. */
+    uint8_t *blk_1;
+		uint8_t *blk_2;
+		
+		blk_1 = block1 + v*stride;
+		blk_2 = block2 + v*stride;
+    
+		  __asm__ (
+		    "ld1 {v0.8h}, [%0]\n\t"         // load result value
+			  "ld1 {v1.8b}, [%1]\n\t"         // load block1
+			  "ld1 {v2.8b}, [%2]\n\t"         // load block2
+			  
+			  "uabdl v3.8h, v1.8b, v2.8b\n\t"  // calculate absolute difference long
+			  "addv h3, v3.8h\n\t"            // vector wide sum store in register v3
+			  
+			  "add v0.8h, v0.8h, v3.8h\n\t"   // add v3 to result value
+			  "st1 {v0.8h}, [%0]\n\t"         // store result value 
+		  : // Output operands
+		  : "r" (result), "r" (blk_1), "r" (blk_2) // Input operands
+		  : "v0", "v1", "v2", "v3", "memory"  // dirty registers
+		  );
   }
 }
