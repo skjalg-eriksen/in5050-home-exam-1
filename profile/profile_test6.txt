@@ -1,0 +1,534 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 45.34      1.41     1.41 63946097     0.02     0.03  c63_motion_estimate
+ 28.62      2.30     0.89 12830400     0.07     0.07  dct_quantize_row
+  8.04      2.55     0.25 10125753     0.02     0.02  me_block_8x8
+  5.14      2.71     0.16 15342530     0.01     0.01  _init
+  2.89      2.80     0.09   712800     0.13     0.13  create_frame
+  2.57      2.88     0.08                             init_c63_enc
+  1.93      2.94     0.06     1200    50.00    93.34  main
+  1.93      3.00     0.06                             dump_image
+  1.93      3.06     0.06                             etext
+  0.64      3.08     0.02   712800     0.03     0.03  dct_quantize
+  0.64      3.10     0.02    22500     0.89     4.89  c63_motion_compensate
+  0.32      3.11     0.01                             free_c63_enc
+  0.00      3.11     0.00   706869     0.00     0.00  _fini
+  0.00      3.11     0.00   356400     0.00     0.00  deregister_tm_clones
+  0.00      3.11     0.00      301     0.00     0.05  scale_block
+  0.00      3.11     0.00      300     0.00     0.00  dct_1d
+  0.00      3.11     0.00      300     0.00   388.28  dct_quant_block_8x8
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.32% of 3.11 seconds
+
+index % time    self  children    called     name
+                0.02    0.00  705672/63946097     print_help [17]
+                0.03    0.01 1425600/63946097     main [11]
+                0.14    0.03 6419384/63946097     _start [7]
+                0.28    0.05 12518808/63946097     init_c63_enc [5]
+                0.95    0.17 42876633/63946097     free_c63_enc [2]
+[1]     53.4    1.41    0.25 63946097         c63_motion_estimate [1]
+                0.25    0.00 10115214/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     36.1    0.01    1.11                 free_c63_enc [2]
+                0.95    0.17 42876633/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     31.2    0.06    0.91                 dump_image [3]
+                0.89    0.00 12830400/12830400     dct_quantize_row [4]
+                0.02    0.00  712800/712800      dct_quantize [16]
+-----------------------------------------------
+                0.89    0.00 12830400/12830400     dump_image [3]
+[4]     28.6    0.89    0.00 12830400         dct_quantize_row [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     17.7    0.08    0.47                 init_c63_enc [5]
+                0.28    0.05 12518808/63946097     c63_motion_estimate [1]
+                0.15    0.00 13916930/15342530     _init [8]
+-----------------------------------------------
+                0.00    0.00     300/10125753     transpose_block [20]
+                0.00    0.00     639/10125753     scale_block [19]
+                0.00    0.00     900/10125753     idct_1d [18]
+                0.00    0.00    3000/10125753     dct_quant_block_8x8 [10]
+                0.00    0.00    5700/10125753     main [11]
+                0.25    0.00 10115214/10125753     c63_motion_estimate [1]
+[6]      8.0    0.25    0.00 10125753         me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      5.4    0.00    0.17                 _start [7]
+                0.14    0.03 6419384/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                0.01    0.00 1425600/15342530     main [11]
+                0.15    0.00 13916930/15342530     init_c63_enc [5]
+[8]      5.1    0.16    0.00 15342530         _init [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      3.7    0.00    0.12                 dequant_idct_block_8x8 [9]
+                0.00    0.12     300/300         dct_quant_block_8x8 [10]
+                0.00    0.00     301/301         scale_block [19]
+                0.00    0.00     597/706869      _fini [43]
+-----------------------------------------------
+                0.00    0.12     300/300         dequant_idct_block_8x8 [9]
+[10]     3.7    0.00    0.12     300         dct_quant_block_8x8 [10]
+                0.06    0.05    1200/1200        main [11]
+                0.00    0.00     900/22500       c63_motion_compensate [12]
+                0.00    0.00    3000/10125753     me_block_8x8 [6]
+                0.00    0.00     300/300         dct_1d [22]
+-----------------------------------------------
+                0.06    0.05    1200/1200        dct_quant_block_8x8 [10]
+[11]     3.6    0.06    0.05    1200         main [11]
+                0.03    0.01 1425600/63946097     c63_motion_estimate [1]
+                0.01    0.00 1425600/15342530     _init [8]
+                0.00    0.00    5700/10125753     me_block_8x8 [6]
+                0.00    0.00  356400/356400      deregister_tm_clones [21]
+-----------------------------------------------
+                0.00    0.00     900/22500       dct_quant_block_8x8 [10]
+                0.02    0.09   21600/22500       __libc_csu_init [13]
+[12]     3.5    0.02    0.09   22500         c63_motion_compensate [12]
+                0.09    0.00  712800/712800      create_frame [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     3.4    0.00    0.11                 __libc_csu_init [13]
+                0.02    0.09   21600/22500       c63_motion_compensate [12]
+-----------------------------------------------
+                0.09    0.00  712800/712800      c63_motion_compensate [12]
+[14]     2.9    0.09    0.00  712800         create_frame [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     1.9    0.06    0.00                 etext [15]
+                0.00    0.00  705672/706869      _fini [43]
+-----------------------------------------------
+                0.02    0.00  712800/712800      dump_image [3]
+[16]     0.6    0.02    0.00  712800         dct_quantize [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.6    0.00    0.02                 print_help [17]
+                0.02    0.00  705672/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.0    0.00    0.00                 idct_1d [18]
+                0.00    0.00     900/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                0.00    0.00     301/301         dequant_idct_block_8x8 [9]
+[19]     0.0    0.00    0.00     301         scale_block [19]
+                0.00    0.00     639/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     0.0    0.00    0.00                 transpose_block [20]
+                0.00    0.00     300/10125753     me_block_8x8 [6]
+                0.00    0.00     600/706869      _fini [43]
+-----------------------------------------------
+                0.00    0.00  356400/356400      main [11]
+[21]     0.0    0.00    0.00  356400         deregister_tm_clones [21]
+-----------------------------------------------
+                0.00    0.00     300/300         dct_quant_block_8x8 [10]
+[22]     0.0    0.00    0.00     300         dct_1d [22]
+-----------------------------------------------
+                0.00    0.00     597/706869      dequant_idct_block_8x8 [9]
+                0.00    0.00     600/706869      transpose_block [20]
+                0.00    0.00  705672/706869      etext [15]
+[43]     0.0    0.00    0.00  706869         _fini [43]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [43] _fini                  [10] dct_quant_block_8x8     [2] free_c63_enc
+   [8] _init                  [16] dct_quantize            [5] init_c63_enc
+  [12] c63_motion_compensate   [4] dct_quantize_row       [11] main
+   [1] c63_motion_estimate    [21] deregister_tm_clones    [6] me_block_8x8
+  [14] create_frame            [3] dump_image             [19] scale_block
+  [22] dct_1d                 [15] etext
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  us/call  us/call  name    
+ 45.34      1.41     1.41 63946097     0.02     0.03  c63_motion_estimate
+ 28.62      2.30     0.89 12830400     0.07     0.07  dct_quantize_row
+  8.04      2.55     0.25 10125753     0.02     0.02  me_block_8x8
+  5.14      2.71     0.16 15342530     0.01     0.01  _init
+  2.89      2.80     0.09   712800     0.13     0.13  create_frame
+  2.57      2.88     0.08                             init_c63_enc
+  1.93      2.94     0.06     1200    50.00    93.34  main
+  1.93      3.00     0.06                             dump_image
+  1.93      3.06     0.06                             etext
+  0.64      3.08     0.02   712800     0.03     0.03  dct_quantize
+  0.64      3.10     0.02    22500     0.89     4.89  c63_motion_compensate
+  0.32      3.11     0.01                             free_c63_enc
+  0.00      3.11     0.00   706869     0.00     0.00  _fini
+  0.00      3.11     0.00   356400     0.00     0.00  deregister_tm_clones
+  0.00      3.11     0.00      301     0.00     0.05  scale_block
+  0.00      3.11     0.00      300     0.00     0.00  dct_1d
+  0.00      3.11     0.00      300     0.00   388.28  dct_quant_block_8x8
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.32% of 3.11 seconds
+
+index % time    self  children    called     name
+                0.02    0.00  705672/63946097     print_help [17]
+                0.03    0.01 1425600/63946097     main [11]
+                0.14    0.03 6419384/63946097     _start [7]
+                0.28    0.05 12518808/63946097     init_c63_enc [5]
+                0.95    0.17 42876633/63946097     free_c63_enc [2]
+[1]     53.4    1.41    0.25 63946097         c63_motion_estimate [1]
+                0.25    0.00 10115214/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[2]     36.1    0.01    1.11                 free_c63_enc [2]
+                0.95    0.17 42876633/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     31.2    0.06    0.91                 dump_image [3]
+                0.89    0.00 12830400/12830400     dct_quantize_row [4]
+                0.02    0.00  712800/712800      dct_quantize [16]
+-----------------------------------------------
+                0.89    0.00 12830400/12830400     dump_image [3]
+[4]     28.6    0.89    0.00 12830400         dct_quantize_row [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]     17.7    0.08    0.47                 init_c63_enc [5]
+                0.28    0.05 12518808/63946097     c63_motion_estimate [1]
+                0.15    0.00 13916930/15342530     _init [8]
+-----------------------------------------------
+                0.00    0.00     300/10125753     transpose_block [20]
+                0.00    0.00     639/10125753     scale_block [19]
+                0.00    0.00     900/10125753     idct_1d [18]
+                0.00    0.00    3000/10125753     dct_quant_block_8x8 [10]
+                0.00    0.00    5700/10125753     main [11]
+                0.25    0.00 10115214/10125753     c63_motion_estimate [1]
+[6]      8.0    0.25    0.00 10125753         me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[7]      5.4    0.00    0.17                 _start [7]
+                0.14    0.03 6419384/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                0.01    0.00 1425600/15342530     main [11]
+                0.15    0.00 13916930/15342530     init_c63_enc [5]
+[8]      5.1    0.16    0.00 15342530         _init [8]
+-----------------------------------------------
+                                                 <spontaneous>
+[9]      3.7    0.00    0.12                 dequant_idct_block_8x8 [9]
+                0.00    0.12     300/300         dct_quant_block_8x8 [10]
+                0.00    0.00     301/301         scale_block [19]
+                0.00    0.00     597/706869      _fini [43]
+-----------------------------------------------
+                0.00    0.12     300/300         dequant_idct_block_8x8 [9]
+[10]     3.7    0.00    0.12     300         dct_quant_block_8x8 [10]
+                0.06    0.05    1200/1200        main [11]
+                0.00    0.00     900/22500       c63_motion_compensate [12]
+                0.00    0.00    3000/10125753     me_block_8x8 [6]
+                0.00    0.00     300/300         dct_1d [22]
+-----------------------------------------------
+                0.06    0.05    1200/1200        dct_quant_block_8x8 [10]
+[11]     3.6    0.06    0.05    1200         main [11]
+                0.03    0.01 1425600/63946097     c63_motion_estimate [1]
+                0.01    0.00 1425600/15342530     _init [8]
+                0.00    0.00    5700/10125753     me_block_8x8 [6]
+                0.00    0.00  356400/356400      deregister_tm_clones [21]
+-----------------------------------------------
+                0.00    0.00     900/22500       dct_quant_block_8x8 [10]
+                0.02    0.09   21600/22500       __libc_csu_init [13]
+[12]     3.5    0.02    0.09   22500         c63_motion_compensate [12]
+                0.09    0.00  712800/712800      create_frame [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     3.4    0.00    0.11                 __libc_csu_init [13]
+                0.02    0.09   21600/22500       c63_motion_compensate [12]
+-----------------------------------------------
+                0.09    0.00  712800/712800      c63_motion_compensate [12]
+[14]     2.9    0.09    0.00  712800         create_frame [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[15]     1.9    0.06    0.00                 etext [15]
+                0.00    0.00  705672/706869      _fini [43]
+-----------------------------------------------
+                0.02    0.00  712800/712800      dump_image [3]
+[16]     0.6    0.02    0.00  712800         dct_quantize [16]
+-----------------------------------------------
+                                                 <spontaneous>
+[17]     0.6    0.00    0.02                 print_help [17]
+                0.02    0.00  705672/63946097     c63_motion_estimate [1]
+-----------------------------------------------
+                                                 <spontaneous>
+[18]     0.0    0.00    0.00                 idct_1d [18]
+                0.00    0.00     900/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                0.00    0.00     301/301         dequant_idct_block_8x8 [9]
+[19]     0.0    0.00    0.00     301         scale_block [19]
+                0.00    0.00     639/10125753     me_block_8x8 [6]
+-----------------------------------------------
+                                                 <spontaneous>
+[20]     0.0    0.00    0.00                 transpose_block [20]
+                0.00    0.00     300/10125753     me_block_8x8 [6]
+                0.00    0.00     600/706869      _fini [43]
+-----------------------------------------------
+                0.00    0.00  356400/356400      main [11]
+[21]     0.0    0.00    0.00  356400         deregister_tm_clones [21]
+-----------------------------------------------
+                0.00    0.00     300/300         dct_quant_block_8x8 [10]
+[22]     0.0    0.00    0.00     300         dct_1d [22]
+-----------------------------------------------
+                0.00    0.00     597/706869      dequant_idct_block_8x8 [9]
+                0.00    0.00     600/706869      transpose_block [20]
+                0.00    0.00  705672/706869      etext [15]
+[43]     0.0    0.00    0.00  706869         _fini [43]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [43] _fini                  [10] dct_quant_block_8x8     [2] free_c63_enc
+   [8] _init                  [16] dct_quantize            [5] init_c63_enc
+  [12] c63_motion_compensate   [4] dct_quantize_row       [11] main
+   [1] c63_motion_estimate    [21] deregister_tm_clones    [6] me_block_8x8
+  [14] create_frame            [3] dump_image             [19] scale_block
+  [22] dct_1d                 [15] etext
