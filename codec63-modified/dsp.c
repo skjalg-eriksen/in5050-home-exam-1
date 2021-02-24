@@ -20,8 +20,6 @@ static void transpose_block(float *in_data, float *out_data)
 
 static void dct_1d(float *in_data, float *out_data)
 {
-  int i;
-
 
   // varriables
   float32x4_t in, in2;          // in, in2 is varribles used to load in_Data
@@ -32,6 +30,7 @@ static void dct_1d(float *in_data, float *out_data)
   in2 = vld1q_f32 (in_data +4); // load last 4 elements from in_data
   
   /*  unrolled loop with neon */
+  // 0
   // load lookup table into neon varriables
   float32x4_t lookup = vld1q_f32 (dctlookup_T+0);     // dctlookup_T is a transposed version of dctlookup
   float32x4_t lookup2 = vld1q_f32 ((dctlookup_T[0])+4);
@@ -41,6 +40,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[0] = vaddvq_f32(r);  // add vector wide sum to out_data
   
+  // 1
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+1);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[1])+4);
@@ -49,7 +49,8 @@ static void dct_1d(float *in_data, float *out_data)
   r2 = vmulq_f32(in2, lookup2); // multiply last 4 elements
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[1] = vaddvq_f32(r);  // add vector wide sum to out_data
-    
+  
+  // 2
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+2);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[2])+4);
@@ -59,6 +60,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[2] = vaddvq_f32(r);  // add vector wide sum to out_data
   
+  // 3
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+3);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[3])+4);
@@ -68,15 +70,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[3] = vaddvq_f32(r);  // add vector wide sum to out_data
   
-  // load lookup table into neon varriables
-  lookup = vld1q_f32 (dctlookup_T+3);     // dctlookup_T is a transposed version of dctlookup
-  lookup2 = vld1q_f32 ((dctlookup_T[3])+4);
-  
-  r = vmulq_f32(in, lookup);    // multiply first 4 elements
-  r2 = vmulq_f32(in2, lookup2); // multiply last 4 elements
-  r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
-  out_data[3] = vaddvq_f32(r);  // add vector wide sum to out_data
-  
+  // 4
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+4);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[4])+4);
@@ -86,6 +80,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[4] = vaddvq_f32(r);  // add vector wide sum to out_data
   
+  // 5
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+5);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[5])+4);
@@ -95,6 +90,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[5] = vaddvq_f32(r);  // add vector wide sum to out_data
   
+  // 6
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+6);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[6])+4);
@@ -104,6 +100,7 @@ static void dct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[6] = vaddvq_f32(r);  // add vector wide sum to out_data
   
+  // 7
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup_T+7);     // dctlookup_T is a transposed version of dctlookup
   lookup2 = vld1q_f32 ((dctlookup_T[7])+4);
@@ -112,35 +109,12 @@ static void dct_1d(float *in_data, float *out_data)
   r2 = vmulq_f32(in2, lookup2); // multiply last 4 elements
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[7] = vaddvq_f32(r);  // add vector wide sum to out_data
-
-
-/*
-  for (i = 0; i < 8; ++i)
-  {
-    // load lookup table into neon varriables
-    float32x4_t lookup = vld1q_f32 (dctlookup_T+i);     // dctlookup_T is a transposed version of dctlookup
-    float32x4_t lookup2 = vld1q_f32 ((dctlookup_T[i])+4);
-    
-    // multiply first 4 elements with with first 4 elements of the lookuptable
-    r = vmulq_f32(in, lookup);
-    // multiply last 4 elements with with first 4 elements of the lookuptable
-    r2 = vmulq_f32(in2, lookup2);
-    // add up the 4 elements from r and r2
-    r = vaddq_f32(r, r2);
-    
-    // add vector wide sum to out_data
-    //out_data[i] = vaddvq_f32(r);
-      printf("\n\nunrolled loop: %f", out_data[i]);
-      printf("\n         loop: %f", vaddvq_f32(r));      
-  }
-  */
   
 }
 
 static void idct_1d(float *in_data, float *out_data)
 {
-  int i;
-  
+
   
   // varriables
   float32x4_t in, in2;          // in, in2 is varribles used to load in_Data
@@ -152,6 +126,7 @@ static void idct_1d(float *in_data, float *out_data)
   
   
   /* unrolled loop with neon  */
+  // 0
   // load lookup table into neon varriables
   float32x4_t lookup = vld1q_f32 (dctlookup+0);
   float32x4_t lookup2 = vld1q_f32 ((dctlookup[0])+4);
@@ -160,7 +135,8 @@ static void idct_1d(float *in_data, float *out_data)
   r2 = vmulq_f32(in2, lookup2); // multiply last 4 elements
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[0] = vaddvq_f32(r);  // add vector wide sum to out_data
-
+  
+  // 1
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+1);
   lookup2 = vld1q_f32 ((dctlookup[1])+4);
@@ -170,6 +146,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[1] = vaddvq_f32(r);
   
+  // 2
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+2);
   lookup2 = vld1q_f32 ((dctlookup[2])+4);
@@ -179,6 +156,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[2] = vaddvq_f32(r);
   
+  // 3
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+3);
   lookup2 = vld1q_f32 ((dctlookup[3])+4);
@@ -188,6 +166,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[3] = vaddvq_f32(r);
   
+  // 4
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+4);
   lookup2 = vld1q_f32 ((dctlookup[4])+4);
@@ -197,6 +176,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[4] = vaddvq_f32(r);
   
+  // 5
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+5);
   lookup2 = vld1q_f32 ((dctlookup[5])+4);
@@ -206,6 +186,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[5] = vaddvq_f32(r);
   
+  // 6
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+6);
   lookup2 = vld1q_f32 ((dctlookup[6])+4);
@@ -215,6 +196,7 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[6] = vaddvq_f32(r);
   
+  // 7
   // load lookup table into neon varriables
   lookup = vld1q_f32 (dctlookup+7);
   lookup2 = vld1q_f32 ((dctlookup[7])+4);
@@ -224,26 +206,6 @@ static void idct_1d(float *in_data, float *out_data)
   r = vaddq_f32(r, r2);         // add up the 4 elements from r and r2
   out_data[7] = vaddvq_f32(r);
 
-  /*
-  for (i = 0; i < 8; ++i)
-  {
-    // load lookup table into neon varriables
-    lookup = vld1q_f32 (dctlookup+i);
-    lookup2 = vld1q_f32 ((dctlookup[i])+4);
-
-    // multiply first 4 elements with with first 4 elements of the lookuptable
-    r = vmulq_f32(in, lookup);
-    // multiply last 4 elements with with first 4 elements of the lookuptable
-    r2 = vmulq_f32(in2, lookup2);
-    // add up the 4 elements from r and r2
-    r = vaddq_f32(r, r2);
-    
-    // add vector wide sum to out_data
-    //out_data[i] = vaddvq_f32(r);
-      printf("\n\nunrolled loop: %f", out_data[i]);
-      printf("\n         loop: %f", vaddvq_f32(r));      
-    }
-    */
 }
 
 static void scale_block(float *in_data, float *out_data)
@@ -350,53 +312,60 @@ void sad_block_8x8(uint8_t *block1, uint8_t *block2, int stride, int *result)
   *result = 0; 
 
   /*  unrolled loop with Neon Intrinsics*/
+    // 0
     b_1 = vld1_u8(block1 + 0*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 0*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
-   
+    
+    // 1
     b_1 = vld1_u8(block1 + 1*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 1*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
 
+    // 2
     b_1 = vld1_u8(block1 + 2*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 2*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
     
+    // 3
     b_1 = vld1_u8(block1 + 3*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 3*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
     
+    // 4
     b_1 = vld1_u8(block1 + 4*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 4*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
- 
+    
+    // 5
     b_1 = vld1_u8(block1 + 5*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 5*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
   
+    // 6
     b_1 = vld1_u8(block1 + 6*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 6*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);   // add to total sad amount
- 
+  
+    // 7
     b_1 = vld1_u8(block1 + 7*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 7*stride); // load 8 elems from block2
     
     sad = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     total_sad = vaddq_u16(sad, total_sad);
     *result += vaddvq_u16(total_sad);      // vector wide sum of total sad amount
-    
 }
