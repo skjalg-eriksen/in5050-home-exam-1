@@ -311,7 +311,7 @@ void sad_block_8x8(uint8_t *block1, uint8_t *block2, int stride, int *result)
   uint16x8_t sad, total_sad;    // variables calcualte sad and hold total sad.
   *result = 0; 
 
-  /*  unrolled loop with Neon Intrinsics*/
+    /*  unrolled loop with Neon Intrinsics*/
     // 0
     b_1 = vld1_u8(block1 + 0*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + 0*stride); // load 8 elems from block2

@@ -2,7 +2,7 @@
 # based on code presented here <http://codereview.stackexchange.com/q/11109>
 
 # CC = gcc  # To specify compiler use: '$ CC=clang make clean all'
-CFLAGS = -O1 -fno-tree-vectorize -march=armv8.2-a -Wall -pg
+CFLAGS = -O1 -fno-tree-vectorize -march=armv8.2-a -Wall -g
 LDFLAGS = -lm
 # Use the compiler to generate make rules. See gcc manual for details.
 MFLAGS = -MMD -MP -MF
