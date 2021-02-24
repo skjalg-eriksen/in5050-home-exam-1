@@ -20,36 +20,70 @@ static void transpose_block(float *in_data, float *out_data)
 
 static void dct_1d(float *in_data, float *out_data)
 {
-  int i, j;
+  int i;
+
+
+  // varriables
+  float32x4_t in, in2;          // in, in2 is varribles used to load in_Data
+  float32x4_t r, r2;            // r, r2 is used as temporary varriables to store results.
+  
+  // load data
+  in = vld1q_f32 (in_data);     // load first 4 elements from in_data
+  in2 = vld1q_f32 (in_data +4); // load last 4 elements from in_data
+  
+
 
   for (i = 0; i < 8; ++i)
   {
-    float dct = 0;
-
-    for (j = 0; j < 8; ++j)
-    {
-      dct += in_data[j] * dctlookup[j][i];
-    }
-
-    out_data[i] = dct;
+    // load lookup table into neon varriables
+    float32x4_t lookup = vld1q_f32 ((dctlookup_T+i));     // dctlookup_T is a transposed version of dctlookup
+    float32x4_t lookup2 = vld1q_f32 ((dctlookup_T[i])+4);
+    
+    // multiply first 4 elements with with first 4 elements of the lookuptable
+    r = vmulq_f32(in, lookup);
+    // multiply last 4 elements with with first 4 elements of the lookuptable
+    r2 = vmulq_f32(in2, lookup2);
+    // add up the 4 elements from r and r2
+    r = vaddq_f32(r, r2);
+    
+    // add vector wide sum to out_data
+    out_data[i] = vaddvq_f32(r);
   }
+  
+  
 }
 
 static void idct_1d(float *in_data, float *out_data)
 {
-  int i, j;
-
+  int i;
+  
+  
+  // varriables
+  float32x4_t in, in2;          // in, in2 is varribles used to load in_Data
+  float32x4_t r, r2;            // r, r2 is used as temporary varriables to store results.
+    
+  // load data
+  in = vld1q_f32 (in_data);     // load first 4 elements from in_data
+  in2 = vld1q_f32 (in_data +4); // load last 4 elements from in_data
+  
+  
   for (i = 0; i < 8; ++i)
   {
-    float idct = 0;
+    // load lookup table into neon varriables
+    float32x4_t lookup = vld1q_f32 ((dctlookup+i));
+    float32x4_t lookup2 = vld1q_f32 ((dctlookup[i])+4);
 
-    for (j = 0; j < 8; ++j)
-    {
-      idct += in_data[j] * dctlookup[i][j];
+    // multiply first 4 elements with with first 4 elements of the lookuptable
+    r = vmulq_f32(in, lookup);
+    // multiply last 4 elements with with first 4 elements of the lookuptable
+    r2 = vmulq_f32(in2, lookup2);
+    // add up the 4 elements from r and r2
+    r = vaddq_f32(r, r2);
+    
+    // add vector wide sum to out_data
+    out_data[i] = vaddvq_f32(r);
+    
     }
-
-    out_data[i] = idct;
-  }
 }
 
 static void scale_block(float *in_data, float *out_data)
@@ -148,27 +182,79 @@ void dequant_idct_block_8x8(int16_t *in_data, int16_t *out_data,
 
 void sad_block_8x8(uint8_t *block1, uint8_t *block2, int stride, int *result)
 {
-  int v;
+  
 
-  *result = 0;
   // Neon Intrinsics varriables
-  //uint8x8_t b_1, b_2; 
-  //uint16x8_t diff;
+  uint8x8_t b_1, b_2; 
+  uint16x8_t diff, diff2;
+  *result = 0; 
 
+  /*  unrolled loop with Neon Intrinsics*/
+    b_1 = vld1_u8(block1 + 0*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 0*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+   
+    b_1 = vld1_u8(block1 + 1*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 1*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+
+    b_1 = vld1_u8(block1 + 2*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 2*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+    
+    b_1 = vld1_u8(block1 + 3*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 3*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+    
+    b_1 = vld1_u8(block1 + 4*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 4*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+ 
+    b_1 = vld1_u8(block1 + 5*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 5*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+  
+    b_1 = vld1_u8(block1 + 6*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 6*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+ 
+    b_1 = vld1_u8(block1 + 7*stride); // load 8 elems from block1
+    b_2 = vld1_u8(block2 + 7*stride); // load 8 elems from block2
+    
+    diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
+    diff2 = vaddq_u16(diff, diff2);
+    *result += vaddvq_u16(diff2);      // vector wide sum
+    
+
+  /*
   for (v = 0; v < 8; ++v)
   {
     
-    /* Neon Intrinsics
+    // Neon Intrinsics
     b_1 = vld1_u8(block1 + v*stride); // load 8 elems from block1
     b_2 = vld1_u8(block2 + v*stride); // load 8 elems from block2
     
     diff = vabdl_u8(b_2, b_1);        // calculate abs difference long, uint8x8_t -> uint16x8_t
     *result += vaddvq_u16(diff);      // vector wide sum
-    */
+    
 
 
 
-    /*  inline-assembly. */
+    //  inline-assembly. 
     uint8_t *blk_1;
 		uint8_t *blk_2;
 		
@@ -188,6 +274,6 @@ void sad_block_8x8(uint8_t *block1, uint8_t *block2, int stride, int *result)
 		  : // Output operands
 		  : "r" (result), "r" (blk_1), "r" (blk_2) // Input operands
 		  : "v0", "v1", "v2", "v3", "memory"  // dirty registers
-		  );
-  }
+		  );*/
+  //}
 }
